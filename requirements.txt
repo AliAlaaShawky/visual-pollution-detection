@@ -1,0 +1,5 @@
+tqdm-4.46.1
+pyyaml-6.0
+totchvision-0.14.1
+psutil
+ipython

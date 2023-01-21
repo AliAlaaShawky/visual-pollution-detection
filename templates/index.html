@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{url_for('static',filename='/R.jfif')}}">
+    <title> رمَم</title>
+
+    <style> 
+     @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
+       * {
+        padding: 0;
+        margin: 0;
+
+    }
+    .ar {
+        font-family: "Tajawal", sans-serif;
+      }
+    body {
+        display: flex ;
+        flex-flow: column wrap;
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        color: brown;
+
+    }
+    form {
+       
+        margin: 5px auto;
+        text-align: center;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px #ccc;
+        display: block;
+        
+    }
+    input[type="file"] {
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+    }
+    input[type="submit"] {
+        padding: 10px 20px;
+        margin: 10px 0;
+        font-size: 18px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    input[type="submit"]:focus {
+        padding: 10px 20px;
+        margin: 10px 0;
+        font-size: 18px;
+        background-color: #b3211c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    #output {
+        margin: 0px auto;
+        text-align: center;
+    }
+    .upload-preview {
+        display: flex;
+        margin: 50px auto;
+        white-space: pre-line;
+    }
+    
+    .header {
+        display: flex;
+        margin: 10px auto;
+        width: 1200px;
+
+    }
+    .header h1 {
+        direction: rtl;
+        text-align: left: ;;
+    }
+    .upload-preview {
+        text-align:center;
+    }
+    .waiting-button {
+  background-color: gray;
+  cursor: wait;
+}
+.wait {
+ margin: 50px auto;
+    display: none;
+    text-align: center;
+}
+.wait.active {
+    display: block;
+}
+.main{
+    
+    background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%), url("{{url_for('static',filename='A93204C4-13B1-44CF-A7E2-0344952229B6.png')}}");
+    background-position: center;
+    background-size: cover;
+    
+
+
+}
+.main2{
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%), url(1.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+.se-pre-con img{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+}
+
+    </style>
+ 
+</head>
+<body class="main">
+        <div class="se-pre-con">
+            <img src="{{url_for('static',filename='loading.gif')}}">
+
+        </div>
+    <header class="header">
+        <h1>رمَم</h1>
+    </header>
+    
+    <!-- <div class="upload-preview">
+       
+        <h1>Image upload
+            Image preview </h1>
+    </div>
+    -->
+    <!-- <form id="upload-form" action="image.html" method="post" enctype="multipart/form-data">
+        <h1>Add image here</h1>
+        <input type="file" id="addImage" name="photo" accept="image/*">
+       <input id="upload-button" type="submit" value="Upload"> 
+        <input id="delete-button" type="button" value="Delete Image">
+        <div id="output"></div>
+        <img src="./spinner.gif" class="wait" id="wait">
+        
+        <form action='/detect' method="post" enctype="multipart/form-data">
+           <input id="upload-button" type="submit" value="Start Detection">
+            <h1 id='message'>{{x}}</h1>
+        </form> -->
+
+
+
+    </form>
+
+    <form action='/show' method="post" enctype="multipart/form-data">
+        <input type="file" id="addImage" name="photo" accept="image/*">
+        <input id="upload-button" type="submit" value="Upload">
+
+    </form>
+    {%if x%}
+    <form action='/detect' method="post">
+       
+       <img style="width: 900px;height:600px; display:block;" src="{{url_for('static',filename='detection.jpg')}}" >
+       <input id="upload-button" type="submit" value="Start Detection">
+    </form>
+    {%elif z%}
+    <form action='/detect' method="post">
+        <img style="width: 900px;height:600px; display:block;" src="{{url_for('static',filename='detection.jpg')}}" >
+     </form>
+    {%endif%}
+    <script type="text/javascript" src="{{url_for('static',filename='script/jQuery2_2_4.js')}}"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            // Animate loader off screen
+            $(".se-pre-con").fadeOut("slow");;
+        });
+    </script>
+
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+      <script>
+ let form = document.getElementById("upload-form");
+let uploadButton = document.getElementById("upload-button");
+let addImage = document.getElementById("addImage");
+let output = document.getElementById("output");
+let wait = document.getElementById("wait");
+let deleteButton = document.getElementById("delete-button");
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    // Remove any previously uploaded images
+    while (output.firstChild) {
+        output.removeChild(output.firstChild);
+    }
+    if (addImage.files.length === 0) {
+        // if no image is chosen show a message
+        let message = document.getElementById("message");
+            message.innerText = "Please add an image before uploading";
+        setTimeout(() => {
+         message.innerText =""
+        }, 2000);
+
+    } else {
+        // Display the spinner while the image is uploading
+        wait.classList.add("active");
+        uploadButton.classList.add("waiting-button");
+        // Get the selected file
+        let file = addImage.files[0];
+        // Create a new FileReader object
+        let reader = new FileReader();
+        // Add an event listener for when the file is finished uploading
+        reader.addEventListener("load", function() {
+            // Get the image data
+            let image = new Image();
+            image.src = reader.result;
+            // Get the current date
+            let date = new Date().toLocaleString();
+            // Create a new element for the date
+            let dateElement = document.createElement("div");
+            dateElement.innerHTML = "Uploaded on: " + date;
+            // Create a new element for the dimensions
+            let dimensionsElement = document.createElement("div");
+            dimensionsElement.innerHTML = "Dimensions: " + image.naturalWidth + " x " + image.naturalHeight;
+            // Add the date and dimensions elements to the output element
+            output.appendChild(dateElement);
+            output.appendChild(dimensionsElement);
+            // Add the image to the output element
+            output.appendChild(image);
+            // Remove the spinner and enable the upload button
+            wait.classList.remove("active");
+            uploadButton.classList.remove("waiting-button");
+        }, false);
+        // Read the file as data URL
+        reader.readAsDataURL(file);
+    }
+});
+
+
+deleteButton.addEventListener("click", function() {
+    // Remove any previously uploaded images
+    while (output.firstChild) {
+        output.removeChild(output.firstChild);
+    }
+});
+    <!-- const btn = document.querySelector('.upload-button');
+    btn.addEventListener('click', function onClick() {
+    btn.style.backgroundColor = 'salmon';
+    btn.style.color = 'white';
+}); -->
+
+
+      </script>
+      
+</body>
+</html>
